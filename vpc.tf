@@ -12,8 +12,16 @@ resource "aws_vpc" "morlu_vpc" {
     cidr_block = var.aws-vpc-cidr
     instance_tenancy = "default"
     tags = {
-      Name = "morlu_vpc"
+      Name      = "morlu_vpc"
       Terraform = "True"
+    }
+  
+}
+resource "aws_internet_gateway" "morlu-vpc-igw" {
+    vpc_id = aws_vpc.morlu_vpc.id
+    tags = {
+      Name      = "morlu-vpc-internet gateway"
+      
     }
   
 }
