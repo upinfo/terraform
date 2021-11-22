@@ -110,5 +110,24 @@ resource "aws_nat_gateway" "morlu-vpc-natgateway1b" {
     }
   
 }
+# Create a Public RouteTable for Public Subnet
 
+resource "aws_route_table" "publuc-RT-morlu_vpc" {
+    vpc_id = aws_vpc.morlu_vpc.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.morlu-vpc-igw.id
+    }
+   tags = {
+     Name = "publuc-RT-morlu_vpc"
+   }
+}
+
+# Attach an existing default RouteTable to Public Subnet
+
+resource "aws_route_table_association" "publuc-RT-morlu_vpc" {
+    subnet_id = aws_subnet.public-morlu-SN-1a.id
+    route_table_id = aws_route_table.publuc-RT-morlu_vpc.id
+  
+}
 
