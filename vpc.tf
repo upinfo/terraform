@@ -106,6 +106,7 @@ resource "aws_nat_gateway" "morlu-vpc-natgateway1b" {
 
     tags = {
       NAME        = "morlu-vpc-natgateway1b"
+      Terraform   = "True"
     }
   
 }
