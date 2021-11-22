@@ -76,3 +76,38 @@ resource "aws_subnet" "private-morlu-SN-1d" {
   
 }
 
+# Create Elastic IP Address for NAT Gateway
+
+resource "aws_eip" "morlu-vpc-natgateway1" {
+  
+}
+
+resource "aws_eip" "morlu-vpc-natgateway2" {
+  
+}
+
+# Create NAT GATEWAY in US-east-1a
+
+resource "aws_nat_gateway" "morlu-vpc-nategateway1a" {
+    allocation_id = aws_eip.morlu-vpc-natgateway1.id
+    subnet_id     = aws_subnet.public-morlu-SN-1a.id
+
+    tags = {
+      NAME        = "morlu-vpc-natgateway1a"
+    }
+  
+}
+
+# Create NAT GATEWAY in US-East-1B
+
+resource "aws_nat_gateway" "morlu-vpc-natgateway1b" {
+    allocation_id = aws_eip.morlu-vpc-natgateway2.id
+    subnet_id     = aws_subnet.public-morlu-SN-1b.id
+
+    tags = {
+      NAME        = "morlu-vpc-natgateway1b"
+    }
+  
+}
+
+
