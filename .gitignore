@@ -9,6 +9,9 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+public-key.tf
+/private-key/*
+
 
 # Crash log files
 crash.log

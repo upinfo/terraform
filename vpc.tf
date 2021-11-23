@@ -174,3 +174,20 @@ resource "aws_route_table_association" "private-RT2-morlu_vpc-association" {
     route_table_id = aws_route_table.private-RT2-morlu_vpc.id
   
 }
+
+# Create Bastion Host Security Group
+
+resource "aws_security_group" "bastion-SG" {
+  vpc_id = aws_vpc.morlu_vpc.id
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+  }
+  tags = {
+    Name = "bastion-SG"
+  }
+}
