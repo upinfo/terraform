@@ -123,11 +123,54 @@ resource "aws_route_table" "publuc-RT-morlu_vpc" {
    }
 }
 
-# Attach an existing default RouteTable to Public Subnet
+# Attach a public RouteTable to Public Subnet
 
-resource "aws_route_table_association" "publuc-RT-morlu_vpc" {
+resource "aws_route_table_association" "publuc-RT-morlu_vpc-association" {
     subnet_id = aws_subnet.public-morlu-SN-1a.id
     route_table_id = aws_route_table.publuc-RT-morlu_vpc.id
   
 }
+resource "aws_route_table_association" "public-RT-morlu_vpc-association" {
+    subnet_id = aws_subnet.public-morlu-SN-1b.id
+    route_table_id = aws_route_table.publuc-RT-morlu_vpc.id
+  
+}
 
+# Create private route table for private subnets
+
+resource "aws_route_table" "private-RT-morlu_vpc" {
+    vpc_id = aws_vpc.morlu_vpc.id
+    route {
+      cidr_block = "0.0.0.0/0"
+      gateway_id = aws_nat_gateway.morlu-vpc-nategateway1a.id
+    }
+    tags = {
+      Name = "private-RT-morlu_vpc"
+    }
+  
+}
+
+resource "aws_route_table" "private-RT2-morlu_vpc" {
+    vpc_id = aws_vpc.morlu_vpc.id
+    route {
+      cidr_block = "0.0.0.0/0"
+      gateway_id = aws_nat_gateway.morlu-vpc-natgateway1b.id
+    }
+    tags = {
+      Name = "private-RT2-morlu_vpc"
+    }
+  
+}
+
+# Attach a private route table with a private subnet
+
+resource "aws_route_table_association" "private-RT-morlu_vpc-association" {
+    subnet_id = aws_subnet.private-morlu-SN-1c.id
+    route_table_id = aws_route_table.private-RT-morlu_vpc.id
+  
+}
+resource "aws_route_table_association" "private-RT2-morlu_vpc-association" {
+    subnet_id = aws_subnet.private-morlu-SN-1d.id
+    route_table_id = aws_route_table.private-RT2-morlu_vpc.id
+  
+}
